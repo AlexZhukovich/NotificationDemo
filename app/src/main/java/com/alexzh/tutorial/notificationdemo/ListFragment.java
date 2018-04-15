@@ -1,8 +1,7 @@
 package com.alexzh.tutorial.notificationdemo;
 
-import android.app.NotificationManager;
+import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,30 +40,37 @@ public class ListFragment extends Fragment {
         NotesAdapter mAdapter = new NotesAdapter(mNotes, new OnItemClickListener() {
             @Override
             public void onNotificationClick(int position) {
-                // TODO fix it
-                Intent allNotesIntent = new Intent(getActivity(), MainActivity.class);
-                Intent detailNoteIntent = new Intent(getActivity(), DetailActivity.class);
+                final AppNotificationManager notificationManager = new AppNotificationManager(getActivity());
+
+                final Intent allNotesIntent = new Intent(getActivity(), MainActivity.class);
                 allNotesIntent.putExtra(MainActivity.NOTIFICATION_ID_STR, MainActivity.NOTIFICATION_ID);
+
+                final PendingIntent allNotesPendingIntent = PendingIntent.getActivity(
+                        getActivity(),
+                        0,
+                        allNotesIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT);
+
+                final Intent detailNoteIntent = new Intent(getActivity(), DetailActivity.class);
                 detailNoteIntent.putExtra(DetailActivity.TEXT_MESSAGE, mNotes.get(position));
-                PendingIntent detailPendingIntent = PendingIntent.getActivity(getActivity(), 0, detailNoteIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                PendingIntent allNotesPendingIntent = PendingIntent.getActivity(getActivity(), 0, allNotesIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle(getString(R.string.action_notification));
-                builder.setContentText(mNotes.get(position));
-                builder.addAction(
+
+                PendingIntent detailPendingIntent = PendingIntent.getActivity(
+                        getActivity(),
+                        0,
+                        detailNoteIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT);
+
+                final NotificationCompat.Action allNotesAction = new NotificationCompat.Action(
                         R.drawable.ic_notification,
                         getString(R.string.action_all_notes),
                         allNotesPendingIntent);
-                builder.setAutoCancel(true);
-                builder.setContentIntent(detailPendingIntent);
 
-                final NotificationManager notificationManager = (NotificationManager)
-                        getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                final Notification notification = notificationManager.createCustomNotification(
+                        allNotesAction,
+                        mNotes.get(position),
+                        detailPendingIntent);
 
-                if (notificationManager != null) {
-                    notificationManager.notify(MainActivity.NOTIFICATION_ID, builder.build());
-                }
+                notificationManager.showNotification(notification);
             }
 
             @Override
