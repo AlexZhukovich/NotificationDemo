@@ -9,9 +9,9 @@ public final class Navigator {
 
     private Navigator() {}
 
-    public static void navigateToDetails(final Activity activity, final String noteText) {
+    public static void navigateToDetails(final Activity activity, final long noteId) {
         final Intent intent = new Intent(activity, DetailActivity.class);
-        intent.putExtra(DetailActivity.TEXT_MESSAGE, noteText);
+        intent.putExtra(DetailActivity.NOTE_ID, noteId);
         activity.startActivity(intent);
     }
 }

@@ -13,12 +13,13 @@ import android.view.ViewGroup;
 
 import com.alexzh.tutorial.notificationdemo.adapter.NotesAdapter;
 import com.alexzh.tutorial.notificationdemo.data.DummyData;
+import com.alexzh.tutorial.notificationdemo.data.model.Note;
 import com.alexzh.tutorial.notificationdemo.navigator.Navigator;
 
 import java.util.List;
 
-public class ListFragment extends Fragment {
-    private List<String> mNotes;
+public class ListFragment extends Fragment implements View.OnClickListener {
+    private List<Note> mNotes;
 
     private AppNotificationManager mNotificationManager;
 
@@ -38,6 +39,8 @@ public class ListFragment extends Fragment {
 
         mNotes = DummyData.getDummyData();
 
+        rootView.findViewById(R.id.send_all_notifications).setOnClickListener(this);
+
         StaggeredGridLayoutManager mGridLayoutManager =
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         RecyclerView mRecyclerView = rootView.findViewById(R.id.list);
@@ -52,10 +55,22 @@ public class ListFragment extends Fragment {
 
             @Override
             public void onContentClick(int position) {
-                Navigator.navigateToDetails(getActivity(), mNotes.get(position));
+                Navigator.navigateToDetails(getActivity(), mNotes.get(position).getId());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
         return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.send_all_notifications:
+                for (Note noteTitle: mNotes) {
+                    mNotificationManager.showDetailsNotificationWithAllNotesAction(noteTitle);
+                }
+                mNotificationManager.showBundleNotification(mNotes.size());
+                break;
+        }
     }
 }

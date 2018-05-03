@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alexzh.tutorial.notificationdemo.data.DummyData;
+import com.alexzh.tutorial.notificationdemo.data.model.Note;
+
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String TEXT_MESSAGE = "text_message";
+    public static final String NOTE_ID = "note_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,14 @@ public class DetailActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.textView);
-            if (getActivity().getIntent().getStringExtra(TEXT_MESSAGE) != null)
-                textView.setText(getActivity().getIntent().getStringExtra(TEXT_MESSAGE));
+            TextView textView = rootView.findViewById(R.id.textView);
+            if (getActivity().getIntent().getLongExtra(NOTE_ID, 0) != 0) {
+                final long id = getActivity().getIntent().getLongExtra(NOTE_ID, 0);
+                final Note note = DummyData.getNoteById(id);
+                if (note != null) {
+                    textView.setText(note.getText());
+                }
+            }
             return rootView;
         }
     }
