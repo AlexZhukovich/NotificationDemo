@@ -20,22 +20,26 @@ public final class DummyData {
                 1L,
                 "Amsterdam",
                 "Amsterdam is the capital of the Netherlands. Amsterdam had a population of 851,573 people in 2017.",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Amsterdam_-_Rijksmuseum_-_panoramio_-_Nikolai_Karaneschev.jpg/640px-Amsterdam_-_Rijksmuseum_-_panoramio_-_Nikolai_Karaneschev.jpg"));
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Amsterdam_-_Rijksmuseum_-_panoramio_-_Nikolai_Karaneschev.jpg/640px-Amsterdam_-_Rijksmuseum_-_panoramio_-_Nikolai_Karaneschev.jpg",
+                "https://en.wikipedia.org/wiki/Amsterdam"));
         notes.add(new City(
                 2L,
                 "Berlin",
                 "Berlin is the capital and the largest city of Germany. Berlin had a population of 3,711,930 people in 2017.",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Berlin_Skyline_Fernsehturm_02.jpg/640px-Berlin_Skyline_Fernsehturm_02.jpg"));
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Berlin_Skyline_Fernsehturm_02.jpg/640px-Berlin_Skyline_Fernsehturm_02.jpg",
+                "https://en.wikipedia.org/wiki/Berlin"));
         notes.add(new City(
                 3L,
                 "Sydney",
                 "Sydney is the state capital of New South Wales and the most populous city in Australia and Oceania. Sydney had a population of 5,131,326 people in 2017.",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Sydney_skyline_from_the_north_August_2016_%2829009142591%29.jpg/640px-Sydney_skyline_from_the_north_August_2016_%2829009142591%29.jpg"));
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Sydney_skyline_from_the_north_August_2016_%2829009142591%29.jpg/640px-Sydney_skyline_from_the_north_August_2016_%2829009142591%29.jpg",
+                "https://en.wikipedia.org/wiki/Sydney"));
         notes.add(new City(
                 4L,
                 "Toronto",
                 "Toronto (officially the City of Toronto), is the capital of the Canadian province of Ontario. Toronto had a population of 2,731,571 people in 2016.",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/York_after_sunset_%282855524410%29.jpg/640px-York_after_sunset_%282855524410%29.jpg"));
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/York_after_sunset_%282855524410%29.jpg/640px-York_after_sunset_%282855524410%29.jpg",
+                "https://en.wikipedia.org/wiki/Toronto"));
         return notes;
     }
 

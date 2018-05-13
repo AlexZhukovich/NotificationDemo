@@ -10,4 +10,5 @@
 
     <string name="action_send">Send notification</string>
     <string name="city_image_content_desc">image of the city</string>
+    <string name="source">Source: Wikipedia</string>
 </resources>

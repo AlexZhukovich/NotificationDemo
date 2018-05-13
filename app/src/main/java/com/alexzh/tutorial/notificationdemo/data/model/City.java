@@ -8,15 +8,18 @@ public class City {
     private final String mName;
     private final String mDescription;
     private final String mImageURL;
+    private final String mSource;
 
     public City(final long id,
                 @NonNull final String name,
                 @NonNull final String description,
-                @NonNull final String imageURL) {
+                @NonNull final String imageURL,
+                @NonNull final String source) {
         mId = id;
         mName = name;
         mDescription = description;
         mImageURL = imageURL;
+        mSource = source;
     }
 
     public long getId() {
@@ -35,6 +38,10 @@ public class City {
         return mImageURL;
     }
 
+    public String getSource() {
+        return mSource;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +52,8 @@ public class City {
         return mId == city.mId &&
                 mName.equals(city.mName) &&
                 mDescription.equals(city.mDescription) &&
-                mImageURL.equals(city.mImageURL);
+                mImageURL.equals(city.mImageURL) &&
+                mSource.equals(city.mSource);
     }
 
     @Override
@@ -54,6 +62,7 @@ public class City {
         result = 31 * result + mName.hashCode();
         result = 31 * result + mDescription.hashCode();
         result = 31 * result + mImageURL.hashCode();
+        result = 31 * result + mSource.hashCode();
         return result;
     }
 
@@ -64,6 +73,7 @@ public class City {
                 ", name='" + mName + '\'' +
                 ", description='" + mDescription + '\'' +
                 ", imageURL='" + mImageURL + '\'' +
+                ", source='" + mSource + '\'' +
                 '}';
     }
 }
