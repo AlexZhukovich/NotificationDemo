@@ -1,64 +1,85 @@
 package com.alexzh.tutorial.notificationdemo;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class DetailActivity extends ActionBarActivity {
+import com.alexzh.tutorial.notificationdemo.data.DummyData;
+import com.alexzh.tutorial.notificationdemo.data.model.City;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
-    public static final String TEXT_MESSAGE = "text_message";
+public class DetailActivity extends AppCompatActivity {
+
+    public static final String CITY_ID = "city_id";
+    public static final int INVALID_VALUE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final TextView textView = findViewById(R.id.description_textView);
+        final TextView source = findViewById(R.id.source_textView);
+
+        setupToolbar(toolbar);
+
+        final long cityId = getIntent().getLongExtra(CITY_ID, INVALID_VALUE);
+        if (cityId != INVALID_VALUE) {
+            final City city = DummyData.getCityById(cityId);
+            if (city != null) {
+                textView.setText(city.getDescription());
+                Glide.with(this)
+                        .load(city.getImageURL())
+                        .into(new SimpleTarget<Drawable>() {
+                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                toolbar.setBackground(resource);
+                            }
+                        });
+            }
         }
+
+        source.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cityId != INVALID_VALUE) {
+                    final City city = DummyData.getCityById(cityId);
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(city.getSource()));
+                    startActivity(myIntent);
+                }
+            }
+        });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
+    private void setupToolbar(@Nullable final Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("");
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.textView);
-            if (getActivity().getIntent().getStringExtra(TEXT_MESSAGE) != null)
-                textView.setText(getActivity().getIntent().getStringExtra(TEXT_MESSAGE));
-            return rootView;
-        }
     }
 }

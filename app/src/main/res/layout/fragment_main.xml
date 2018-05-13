@@ -1,8 +1,24 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.alexzh.tutorial.notificationdemo.ListFragment">
+
+    <TextView
+        android:id="@+id/send_all_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_margin_top"
+        android:layout_marginStart="@dimen/view_margin_start"
+        android:layout_marginLeft="@dimen/view_margin_start"
+        android:layout_marginEnd="@dimen/view_margin_end"
+        android:layout_marginRight="@dimen/view_margin_end"
+        android:layout_marginBottom="@dimen/view_margin_bottom"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/send_all_notification" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
