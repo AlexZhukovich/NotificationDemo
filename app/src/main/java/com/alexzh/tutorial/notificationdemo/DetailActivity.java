@@ -30,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        final TextView textView = findViewById(R.id.textView);
+        final TextView textView = findViewById(R.id.description_textView);
         final TextView source = findViewById(R.id.source_textView);
 
         setupToolbar(toolbar);

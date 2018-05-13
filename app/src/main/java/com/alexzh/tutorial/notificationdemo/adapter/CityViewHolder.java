@@ -9,16 +9,16 @@ import com.alexzh.tutorial.notificationdemo.OnItemClickListener;
 import com.alexzh.tutorial.notificationdemo.R;
 
 public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public TextView mNoteText;
-    public ImageView mNotificationImage;
+    public TextView mDescription;
+    public ImageView mCityImage;
     private OnItemClickListener mItemClickListener;
 
     CityViewHolder(View itemView, OnItemClickListener onItemClickListener) {
         super(itemView);
         mItemClickListener = onItemClickListener;
-        mNoteText = itemView.findViewById(R.id.text);
-        mNotificationImage = itemView.findViewById(R.id.image);
-        Button mSendNotificationButton = itemView.findViewById(R.id.button);
+        mDescription = itemView.findViewById(R.id.description);
+        mCityImage = itemView.findViewById(R.id.city_image);
+        Button mSendNotificationButton = itemView.findViewById(R.id.send_button);
 
         mSendNotificationButton.setOnClickListener(this);
         itemView.setOnClickListener(this);
@@ -27,7 +27,7 @@ public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.button) {
+        if (v.getId() == R.id.send_button) {
             mItemClickListener.onNotificationClick(getAdapterPosition());
         } else {
             mItemClickListener.onContentClick(getAdapterPosition());

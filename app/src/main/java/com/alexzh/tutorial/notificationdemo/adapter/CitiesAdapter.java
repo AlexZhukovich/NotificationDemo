@@ -39,7 +39,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CityViewHolder> {
     @Override
     public void onBindViewHolder(final @NonNull CityViewHolder viewHolder,
                                  final int position) {
-        viewHolder.mNoteText.setText(mCities.get(position).getDescription());
+        viewHolder.mDescription.setText(mCities.get(position).getDescription());
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CircleCrop());
@@ -47,7 +47,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CityViewHolder> {
         Glide.with(viewHolder.itemView.getContext())
                 .load(mCities.get(position).getImageURL())
                 .apply(requestOptions)
-                .into(viewHolder.mNotificationImage);
+                .into(viewHolder.mCityImage);
     }
 
     @Override
