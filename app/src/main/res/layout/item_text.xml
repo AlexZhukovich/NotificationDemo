@@ -28,7 +28,6 @@
         android:layout_marginTop="@dimen/view_margin_top"
         android:layout_marginEnd="@dimen/view_margin_end"
         android:layout_marginRight="@dimen/view_margin_end"
-        android:layout_marginBottom="@dimen/view_margin_bottom"
         android:background="@android:color/transparent"
         android:text="@string/action_send"
         android:textColor="@color/colorAccent"
