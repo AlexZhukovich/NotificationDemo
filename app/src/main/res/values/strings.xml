@@ -1,13 +1,20 @@
 <resources>
+    <!-- Application -->
     <string name="app_name">NotificationDemo</string>
-    <string name="action_notification">Notification</string>
-    <string name="action_all_notes">All notes</string>
-    <string name="title_activity_detail">DetailActivity</string>
-    <string name="send_all_notification">Send all notification as a bundle</string>
-    <string name="notes_channel_name">Notes</string>
-    <string name="app_channel_name">Application</string>
+    <string name="title_list_activity">Cities</string>
+    <string name="title_detail_activity">Details</string>
 
-    <string name="action_send">Send notification</string>
+    <!-- Notifications -->
+    <string name="notification_title">City info</string>
+    <string name="notification_channel_cities_name">Cities</string>
+    <string name="notification_channel_cities_description">Information about cities</string>
+    <string name="notification_channel_app_name">Application</string>
+    <string name="notification_channel_app_description">General app updates</string>
+    <string name="notification_action_all_cities">All cities</string>
+
+    <!-- Layout -->
+    <string name="title_send_all_notifications">Send all notification as a bundle</string>
+    <string name="title_send_notification">Send notification</string>
     <string name="city_image_content_desc">image of the city</string>
     <string name="source">Source: Wikipedia</string>
 </resources>

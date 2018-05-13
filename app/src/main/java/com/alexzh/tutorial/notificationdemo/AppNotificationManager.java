@@ -19,9 +19,9 @@ import java.util.List;
 
 public class AppNotificationManager {
     private final static String APP_PACKAGE = "com.alexzh.tutorial.notificationdemo";
-    private final static String NOTES_CHANEL_ID = APP_PACKAGE + ".CITIES_CHANNEL";
+    private final static String CITIES_CHANEL_ID = APP_PACKAGE + ".CITIES_CHANNEL";
     private final static String APP_CHANEL_ID = APP_PACKAGE + ".APP_CHANNEL";
-    private final static String GROUP_KEY_NOTES = APP_CHANEL_ID + ".CITIES_GROUP";
+    private final static String GROUP_KEY_CITIES = APP_CHANEL_ID + ".CITIES_GROUP";
     private final static long BASE_NOTIFICATION_ID = 100L;
 
     @NonNull
@@ -33,15 +33,15 @@ public class AppNotificationManager {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             final List<NotificationChannel> channels = new ArrayList<>();
             channels.add(createAppNotificationChanel(
-                    NOTES_CHANEL_ID,
-                    mContext.getString(R.string.notes_channel_name),
-                    "Cities description",
+                    CITIES_CHANEL_ID,
+                    mContext.getString(R.string.notification_channel_cities_name),
+                    mContext.getString(R.string.notification_channel_cities_description),
                     NotificationManagerCompat.IMPORTANCE_HIGH));
 
             channels.add(createAppNotificationChanel(
                     APP_CHANEL_ID,
-                    mContext.getString(R.string.app_channel_name),
-                    "Application description",
+                    mContext.getString(R.string.notification_channel_app_name),
+                    mContext.getString(R.string.notification_channel_app_description),
                     NotificationManagerCompat.IMPORTANCE_DEFAULT));
 
             final NotificationManager notificationManager = (NotificationManager)
@@ -61,14 +61,14 @@ public class AppNotificationManager {
     private Notification createCustomNotification(final NotificationCompat.Action action,
                                                   final String message,
                                                   final PendingIntent contentIntent) {
-        return new NotificationCompat.Builder(mContext, NOTES_CHANEL_ID)
+        return new NotificationCompat.Builder(mContext, CITIES_CHANEL_ID)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(mContext.getString(R.string.action_notification))
+                .setContentTitle(mContext.getString(R.string.notification_title))
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setContentIntent(contentIntent)
                 .addAction(action)
-                .setGroup(GROUP_KEY_NOTES)
+                .setGroup(GROUP_KEY_CITIES)
                 .build();
     }
 
@@ -105,7 +105,7 @@ public class AppNotificationManager {
 
         final NotificationCompat.Action allNotesAction = new NotificationCompat.Action(
                 R.drawable.ic_notification,
-                mContext.getString(R.string.action_all_notes),
+                mContext.getString(R.string.notification_action_all_cities),
                 allNotesPendingIntent);
 
         final Notification notification = createCustomNotification(
@@ -117,11 +117,11 @@ public class AppNotificationManager {
     }
 
     public void showBundleNotification(final int notificationCount) {
-        final Notification summaryNotification = new NotificationCompat.Builder(mContext, NOTES_CHANEL_ID)
+        final Notification summaryNotification = new NotificationCompat.Builder(mContext, CITIES_CHANEL_ID)
                 .setContentText(notificationCount + " cities")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setStyle(new NotificationCompat.InboxStyle())
-                .setGroup(GROUP_KEY_NOTES)
+                .setGroup(GROUP_KEY_CITIES)
                 .setGroupSummary(true)
                 .build();
         showNotification(summaryNotification, (int) BASE_NOTIFICATION_ID);

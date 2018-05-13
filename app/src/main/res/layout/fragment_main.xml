@@ -18,7 +18,7 @@
         android:layout_marginBottom="@dimen/view_margin_bottom"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/send_all_notification" />
+        android:text="@string/title_send_all_notifications" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
