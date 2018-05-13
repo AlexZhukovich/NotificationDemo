@@ -12,16 +12,16 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.alexzh.tutorial.notificationdemo.data.model.Note;
+import com.alexzh.tutorial.notificationdemo.data.model.City;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppNotificationManager {
     private final static String APP_PACKAGE = "com.alexzh.tutorial.notificationdemo";
-    private final static String NOTES_CHANEL_ID = APP_PACKAGE + ".NOTES_CHANNEL";
+    private final static String NOTES_CHANEL_ID = APP_PACKAGE + ".CITIES_CHANNEL";
     private final static String APP_CHANEL_ID = APP_PACKAGE + ".APP_CHANNEL";
-    private final static String GROUP_KEY_NOTES = APP_CHANEL_ID + ".NOTES_GROUP";
+    private final static String GROUP_KEY_NOTES = APP_CHANEL_ID + ".CITIES_GROUP";
     private final static long BASE_NOTIFICATION_ID = 100L;
 
     @NonNull
@@ -35,7 +35,7 @@ public class AppNotificationManager {
             channels.add(createAppNotificationChanel(
                     NOTES_CHANEL_ID,
                     mContext.getString(R.string.notes_channel_name),
-                    "Notes description",
+                    "Cities description",
                     NotificationManagerCompat.IMPORTANCE_HIGH));
 
             channels.add(createAppNotificationChanel(
@@ -82,9 +82,9 @@ public class AppNotificationManager {
         return channel;
     }
 
-    public void showDetailsNotificationWithAllNotesAction(final @NonNull Note note) {
+    public void showDetailsNotificationWithAllNotesAction(final @NonNull City city) {
         final Intent allNotesIntent = new Intent(mContext, MainActivity.class);
-        final int notificationId = (int) (BASE_NOTIFICATION_ID + note.getId());
+        final int notificationId = (int) (BASE_NOTIFICATION_ID + city.getId());
 
         allNotesIntent.putExtra(MainActivity.NOTIFICATION_ID_STR, MainActivity.NOTIFICATION_ID);
 
@@ -95,7 +95,7 @@ public class AppNotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         final Intent detailNoteIntent = new Intent(mContext, DetailActivity.class);
-        detailNoteIntent.putExtra(DetailActivity.NOTE_ID, note.getId());
+        detailNoteIntent.putExtra(DetailActivity.CITY_ID, city.getId());
 
         PendingIntent detailPendingIntent = PendingIntent.getActivity(
                 mContext,
@@ -110,7 +110,7 @@ public class AppNotificationManager {
 
         final Notification notification = createCustomNotification(
                 allNotesAction,
-                note.getText(),
+                city.getDescription(),
                 detailPendingIntent);
 
         showNotification(notification, notificationId);
@@ -118,7 +118,7 @@ public class AppNotificationManager {
 
     public void showBundleNotification(final int notificationCount) {
         final Notification summaryNotification = new NotificationCompat.Builder(mContext, NOTES_CHANEL_ID)
-                .setContentText(notificationCount + " note(s)")
+                .setContentText(notificationCount + " cities")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setStyle(new NotificationCompat.InboxStyle())
                 .setGroup(GROUP_KEY_NOTES)

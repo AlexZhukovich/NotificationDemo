@@ -7,4 +7,7 @@
     <string name="send_all_notification">Send all notification as a bundle</string>
     <string name="notes_channel_name">Notes</string>
     <string name="app_channel_name">Application</string>
+
+    <string name="action_send">Send notification</string>
+    <string name="city_image_content_desc">image of the city</string>
 </resources>

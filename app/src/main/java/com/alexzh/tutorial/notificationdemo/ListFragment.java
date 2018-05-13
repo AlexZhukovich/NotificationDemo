@@ -11,15 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alexzh.tutorial.notificationdemo.adapter.NotesAdapter;
+import com.alexzh.tutorial.notificationdemo.adapter.CitiesAdapter;
 import com.alexzh.tutorial.notificationdemo.data.DummyData;
-import com.alexzh.tutorial.notificationdemo.data.model.Note;
+import com.alexzh.tutorial.notificationdemo.data.model.City;
 import com.alexzh.tutorial.notificationdemo.navigator.Navigator;
 
 import java.util.List;
 
 public class ListFragment extends Fragment implements View.OnClickListener {
-    private List<Note> mNotes;
+    private List<City> mCities;
 
     private AppNotificationManager mNotificationManager;
 
@@ -37,7 +37,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                              final @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mNotes = DummyData.getDummyData();
+        mCities = DummyData.getDummyData();
 
         rootView.findViewById(R.id.send_all_notifications).setOnClickListener(this);
 
@@ -47,15 +47,15 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        NotesAdapter mAdapter = new NotesAdapter(mNotes, new OnItemClickListener() {
+        CitiesAdapter mAdapter = new CitiesAdapter(mCities, new OnItemClickListener() {
             @Override
             public void onNotificationClick(int position) {
-                mNotificationManager.showDetailsNotificationWithAllNotesAction(mNotes.get(position));
+                mNotificationManager.showDetailsNotificationWithAllNotesAction(mCities.get(position));
             }
 
             @Override
             public void onContentClick(int position) {
-                Navigator.navigateToDetails(getActivity(), mNotes.get(position).getId());
+                Navigator.navigateToDetails(getActivity(), mCities.get(position).getId());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -66,10 +66,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_all_notifications:
-                for (Note noteTitle: mNotes) {
-                    mNotificationManager.showDetailsNotificationWithAllNotesAction(noteTitle);
+                for (City city: mCities) {
+                    mNotificationManager.showDetailsNotificationWithAllNotesAction(city);
                 }
-                mNotificationManager.showBundleNotification(mNotes.size());
+                mNotificationManager.showBundleNotification(mCities.size());
                 break;
         }
     }

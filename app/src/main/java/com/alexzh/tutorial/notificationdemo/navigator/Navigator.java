@@ -11,7 +11,7 @@ public final class Navigator {
 
     public static void navigateToDetails(final Activity activity, final long noteId) {
         final Intent intent = new Intent(activity, DetailActivity.class);
-        intent.putExtra(DetailActivity.NOTE_ID, noteId);
+        intent.putExtra(DetailActivity.CITY_ID, noteId);
         activity.startActivity(intent);
     }
 }
