@@ -82,34 +82,34 @@ public class AppNotificationManager {
         return channel;
     }
 
-    public void showDetailsNotificationWithAllNotesAction(final @NonNull City city) {
-        final Intent allNotesIntent = new Intent(mContext, MainActivity.class);
+    public void showDetailsNotificationWithAllCitiesAction(final @NonNull City city) {
+        final Intent allCitiesIntent = new Intent(mContext, MainActivity.class);
         final int notificationId = (int) (BASE_NOTIFICATION_ID + city.getId());
 
-        allNotesIntent.putExtra(MainActivity.NOTIFICATION_ID_STR, MainActivity.NOTIFICATION_ID);
+        allCitiesIntent.putExtra(MainActivity.NOTIFICATION_ID_STR, MainActivity.NOTIFICATION_ID);
 
-        final PendingIntent allNotesPendingIntent = PendingIntent.getActivity(
+        final PendingIntent allCitiesPendingIntent = PendingIntent.getActivity(
                 mContext,
                 notificationId,
-                allNotesIntent,
+                allCitiesIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final Intent detailNoteIntent = new Intent(mContext, DetailActivity.class);
-        detailNoteIntent.putExtra(DetailActivity.CITY_ID, city.getId());
+        final Intent detailCityIntent = new Intent(mContext, DetailActivity.class);
+        detailCityIntent.putExtra(DetailActivity.CITY_ID, city.getId());
 
         PendingIntent detailPendingIntent = PendingIntent.getActivity(
                 mContext,
                 notificationId,
-                detailNoteIntent,
+                detailCityIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final NotificationCompat.Action allNotesAction = new NotificationCompat.Action(
+        final NotificationCompat.Action allCitiesAction = new NotificationCompat.Action(
                 R.drawable.ic_notification,
                 mContext.getString(R.string.notification_action_all_cities),
-                allNotesPendingIntent);
+                allCitiesPendingIntent);
 
         final Notification notification = createCustomNotification(
-                allNotesAction,
+                allCitiesAction,
                 city.getDescription(),
                 detailPendingIntent);
 

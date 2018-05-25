@@ -51,7 +51,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         CitiesAdapter mAdapter = new CitiesAdapter(mCities, new OnItemClickListener() {
             @Override
             public void onNotificationClick(int position) {
-                mNotificationManager.showDetailsNotificationWithAllNotesAction(mCities.get(position));
+                mNotificationManager.showDetailsNotificationWithAllCitiesAction(mCities.get(position));
             }
 
             @Override
@@ -68,7 +68,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.send_all_notifications:
                 for (City city: mCities) {
-                    mNotificationManager.showDetailsNotificationWithAllNotesAction(city);
+                    mNotificationManager.showDetailsNotificationWithAllCitiesAction(city);
                 }
                 mNotificationManager.showBundleNotification(mCities.size());
                 break;
