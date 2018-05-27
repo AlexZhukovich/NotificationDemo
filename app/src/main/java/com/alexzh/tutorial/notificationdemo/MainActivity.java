@@ -1,14 +1,10 @@
 package com.alexzh.tutorial.notificationdemo;
 
-import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static int NOTIFICATION_ID = 100;
-    public static String NOTIFICATION_ID_STR = "_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(getIntent().getIntExtra(NOTIFICATION_ID_STR, -1));
+        final AppNotificationManager notificationManager = new AppNotificationManager(this);
+        notificationManager.hideNotification(getIntent());
     }
 }
