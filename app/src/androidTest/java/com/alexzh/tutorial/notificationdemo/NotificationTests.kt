@@ -35,7 +35,7 @@ class NotificationTests {
     private val expectedAllCities by lazy { activityRule.activity.getString(R.string.notification_action_all_cities) }
     private val expectedTitle by lazy { activityRule.activity.getString(R.string.notification_title) }
     private val expectedText by lazy { DummyData.getCityById(amsterdamId).description  }
-    private val expectedSource by lazy { "Source: Wikipedia" }
+    private val expectedSource by lazy { activityRule.activity.getString(R.string.source) }
     private val timeout = 3_000L
 
     private val uiDevice by lazy {
