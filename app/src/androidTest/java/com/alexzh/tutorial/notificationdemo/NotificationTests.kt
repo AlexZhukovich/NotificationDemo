@@ -65,6 +65,8 @@ class NotificationTests {
         assertEquals(expectedTitle, title.text)
         assertTrue(text.text.startsWith(expectedText))
         assertEquals(expectedAllCities.toLowerCase(), allCities.text.toLowerCase())
+
+        clearAllNotifications()
     }
 
     @Test
@@ -110,6 +112,7 @@ class NotificationTests {
         onView(withId(R.id.send_all_notifications))
                 .perform(click())
 
+        hideNotification(expectedTitle)
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
         val notificationHeader: UiObject2 = uiDevice.findObject(By.res("android:id/notification_header"))
@@ -121,6 +124,8 @@ class NotificationTests {
 
         onView(withId(R.id.description_textView))
                 .check(matches(withText(expectedText)))
+
+        clearAllNotifications()
     }
 
     @After
@@ -142,5 +147,18 @@ class NotificationTests {
                 view?.findViewById<View>(R.id.send_button)?.performClick()
             }
         }
+    }
+
+    private fun hideNotification(notificationTitle: String) {
+        uiDevice.wait(Until.hasObject(By.text(expectedText)), timeout)
+        val notification: UiObject2 = uiDevice.findObject(By.text(notificationTitle))
+        notification.swipe(Direction.UP, 0.05f)
+    }
+
+    private fun clearAllNotifications() {
+        uiDevice.openNotification()
+        uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
+        val clearAll: UiObject2 = uiDevice.findObject(By.res("com.android.systemui:id/dismiss_text"))
+        clearAll.click()
     }
 }
