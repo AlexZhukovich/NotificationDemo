@@ -10,10 +10,7 @@ import android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtP
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.support.test.uiautomator.By
-import android.support.test.uiautomator.UiDevice
-import android.support.test.uiautomator.UiObject2
-import android.support.test.uiautomator.Until
+import android.support.test.uiautomator.*
 import android.view.View
 import android.widget.Button
 import com.alexzh.tutorial.notificationdemo.adapter.CityViewHolder
@@ -33,6 +30,7 @@ class NotificationTests {
 
     private val expectedAppName by lazy { activityRule.activity.getString(R.string.app_name) }
     private val expectedAllCities by lazy { activityRule.activity.getString(R.string.notification_action_all_cities) }
+    private val expectedAllCitiesActionRes by lazy { "android:id/action0" }
     private val expectedTitle by lazy { activityRule.activity.getString(R.string.notification_title) }
     private val expectedText by lazy { DummyData.getCityById(amsterdamId).description  }
     private val expectedSource by lazy { activityRule.activity.getString(R.string.source) }
@@ -63,10 +61,10 @@ class NotificationTests {
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
         val title: UiObject2 = uiDevice.findObject(By.text(expectedTitle))
         val text: UiObject2 = uiDevice.findObject(By.textStartsWith(expectedText))
-        val allCities: UiObject2 = uiDevice.findObject(By.text(expectedAllCities))
+        val allCities: UiObject2 = uiDevice.findObject(By.res(expectedAllCitiesActionRes))
         assertEquals(expectedTitle, title.text)
         assertTrue(text.text.startsWith(expectedText))
-        assertEquals(expectedAllCities, allCities.text)
+        assertEquals(expectedAllCities.toLowerCase(), allCities.text.toLowerCase())
     }
 
     @Test
@@ -99,12 +97,30 @@ class NotificationTests {
 
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
-        val allCities: UiObject2 = uiDevice.findObject(By.text(expectedAllCities))
+        val allCities: UiObject2 = uiDevice.findObject(By.res(expectedAllCitiesActionRes))
         allCities.click()
         uiDevice.wait(Until.hasObject(By.text(allNotificationAsBundleText)), timeout)
 
         onView(withId(R.id.send_all_notifications))
                 .check(matches(withText(R.string.title_send_all_notifications)))
+    }
+
+    @Test
+    fun shouldClickOnFirstNotificationOfNotificationBundle() {
+        onView(withId(R.id.send_all_notifications))
+                .perform(click())
+
+        uiDevice.openNotification()
+        uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
+        val notificationHeader: UiObject2 = uiDevice.findObject(By.res("android:id/notification_header"))
+        notificationHeader.swipe(Direction.DOWN, 0.05f)
+
+        val amsterdamNotification: UiObject2 = uiDevice.findObject(By.text(expectedText))
+        amsterdamNotification.click()
+        uiDevice.wait(Until.hasObject(By.text(expectedText)), timeout)
+
+        onView(withId(R.id.description_textView))
+                .check(matches(withText(expectedText)))
     }
 
     @After
