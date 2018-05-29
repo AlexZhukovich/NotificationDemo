@@ -128,6 +128,27 @@ class NotificationTests {
         clearAllNotifications()
     }
 
+    @Test
+    fun shouldClickOnAppIconAndVerifyNotificationBadge() {
+        onView(withId(R.id.list))
+                .perform(actionOnItemAtPosition<CityViewHolder>(0, clickOnSendNotification()))
+
+        uiDevice.pressHome()
+        /*hideNotification()*/
+        val allApps : UiObject2 = uiDevice.findObject(By.res("com.google.android.apps.nexuslauncher:id/drag_indicator"))
+        allApps.click()
+
+        uiDevice.wait(Until.hasObject(By.text(expectedAppName)), timeout)
+        val app: UiObject2 = uiDevice.findObject(By.text(expectedAppName))
+        app.longClick()
+
+        val amsterdamNotification: UiObject2 = uiDevice.findObject(By.text(expectedText))
+        amsterdamNotification.click()
+        uiDevice.wait(Until.hasObject(By.text(expectedText)), timeout)
+        onView(withId(R.id.description_textView))
+                .check(matches(withText(expectedText)))
+    }
+
     @After
     fun tearDown() {
         uiDevice.pressBack()
