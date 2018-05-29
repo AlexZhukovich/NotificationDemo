@@ -112,7 +112,7 @@ class NotificationTests {
         onView(withId(R.id.send_all_notifications))
                 .perform(click())
 
-        hideNotification(expectedTitle)
+        /*hideNotification()*/
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
         val notificationHeader: UiObject2 = uiDevice.findObject(By.res("android:id/notification_header"))
@@ -149,10 +149,22 @@ class NotificationTests {
         }
     }
 
-    private fun hideNotification(notificationTitle: String) {
-        uiDevice.wait(Until.hasObject(By.text(expectedText)), timeout)
-        val notification: UiObject2 = uiDevice.findObject(By.text(notificationTitle))
-        notification.swipe(Direction.UP, 0.05f)
+    /**
+     * Workaround for swiping down the floating notification.
+     * As an alternative, we can turn off them using the
+     * <pre>
+     * {@code adb shell settings put global heads_up_notifications_enabled 0}
+     * </pre>
+     */
+    @SuppressWarnings("unused")
+    private fun hideNotification() {
+        uiDevice.swipe(
+                200,
+                200,
+                200,
+                100,
+                5
+        )
     }
 
     private fun clearAllNotifications() {
