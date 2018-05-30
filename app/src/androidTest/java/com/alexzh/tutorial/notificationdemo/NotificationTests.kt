@@ -24,17 +24,30 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * The {@link hideNotification() hideNotification} method commented
+ * in test cases because I disabled floating notification use ADB using the
+ * <pre>
+ * {@code adb shell settings put global heads_up_notifications_enabled 0}
+ * </pre>
+ */
 @RunWith(AndroidJUnit4::class)
 class NotificationTests {
     private val amsterdamId = 1L
+    private val timeout = 3_000L
+    private val firstItemPos = 0
+
+    private val expectedAllCitiesActionRes = "android:id/action0"
+    private val expectedText = DummyData.getCityById(amsterdamId).description
+
+    private val notificationHeaderRes = "android:id/notification_header"
+    private val clearAllNotificationRes = "com.android.systemui:id/dismiss_text"
+    private val allAppsLauncherRes = "com.google.android.apps.nexuslauncher:id/drag_indicator"
 
     private val expectedAppName by lazy { activityRule.activity.getString(R.string.app_name) }
     private val expectedAllCities by lazy { activityRule.activity.getString(R.string.notification_action_all_cities) }
-    private val expectedAllCitiesActionRes by lazy { "android:id/action0" }
     private val expectedTitle by lazy { activityRule.activity.getString(R.string.notification_title) }
-    private val expectedText by lazy { DummyData.getCityById(amsterdamId).description  }
     private val expectedSource by lazy { activityRule.activity.getString(R.string.source) }
-    private val timeout = 3_000L
 
     private val uiDevice by lazy {
         UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
@@ -46,7 +59,7 @@ class NotificationTests {
     @Test
     fun shouldOpenDetailsInformationAboutAmsterdam() {
         onView(withId(R.id.list))
-                .perform(actionOnItemAtPosition<CityViewHolder>(0, click()))
+                .perform(actionOnItemAtPosition<CityViewHolder>(firstItemPos, click()))
 
         onView(withId(R.id.source_textView))
                 .check(matches(withText(expectedSource)))
@@ -55,7 +68,7 @@ class NotificationTests {
     @Test
     fun shouldSendNotificationWhichContainsTitleTextAndAllCities() {
         onView(withId(R.id.list))
-                .perform(actionOnItemAtPosition<CityViewHolder>(0, clickOnSendNotification()))
+                .perform(actionOnItemAtPosition<CityViewHolder>(firstItemPos, clickOnSendNotification()))
 
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
@@ -72,7 +85,7 @@ class NotificationTests {
     @Test
     fun shouldClickOnNotificationOpenDetailsScreen() {
         onView(withId(R.id.list))
-                .perform(actionOnItemAtPosition<CityViewHolder>(0, clickOnSendNotification()))
+                .perform(actionOnItemAtPosition<CityViewHolder>(firstItemPos, clickOnSendNotification()))
 
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
@@ -93,7 +106,7 @@ class NotificationTests {
                 activityRule.activity.getText(R.string.title_send_all_notifications).toString()
 
         onView(withId(R.id.list))
-                .perform(actionOnItemAtPosition<CityViewHolder>(0, clickOnSendNotification()))
+                .perform(actionOnItemAtPosition<CityViewHolder>(firstItemPos, clickOnSendNotification()))
 
         uiDevice.pressBack()
 
@@ -115,7 +128,7 @@ class NotificationTests {
         /*hideNotification()*/
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
-        val notificationHeader: UiObject2 = uiDevice.findObject(By.res("android:id/notification_header"))
+        val notificationHeader: UiObject2 = uiDevice.findObject(By.res(notificationHeaderRes))
         notificationHeader.swipe(Direction.DOWN, 0.05f)
 
         val amsterdamNotification: UiObject2 = uiDevice.findObject(By.text(expectedText))
@@ -131,11 +144,11 @@ class NotificationTests {
     @Test
     fun shouldClickOnAppIconAndVerifyNotificationBadge() {
         onView(withId(R.id.list))
-                .perform(actionOnItemAtPosition<CityViewHolder>(0, clickOnSendNotification()))
+                .perform(actionOnItemAtPosition<CityViewHolder>(firstItemPos, clickOnSendNotification()))
 
         uiDevice.pressHome()
         /*hideNotification()*/
-        val allApps : UiObject2 = uiDevice.findObject(By.res("com.google.android.apps.nexuslauncher:id/drag_indicator"))
+        val allApps : UiObject2 = uiDevice.findObject(By.res(allAppsLauncherRes))
         allApps.click()
 
         uiDevice.wait(Until.hasObject(By.text(expectedAppName)), timeout)
@@ -191,7 +204,7 @@ class NotificationTests {
     private fun clearAllNotifications() {
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textStartsWith(expectedAppName)), timeout)
-        val clearAll: UiObject2 = uiDevice.findObject(By.res("com.android.systemui:id/dismiss_text"))
+        val clearAll: UiObject2 = uiDevice.findObject(By.res(clearAllNotificationRes))
         clearAll.click()
     }
 }
