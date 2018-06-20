@@ -1,10 +1,13 @@
 # NotificationDemo
-Example for notification in Android<br />
+Example of using and testing notification in Android<br />
 
-### Guide: Android notifications
-<img src="http://alexzh.com/wp-content/uploads/2018/05/logo-1140x713.png" width="360px" height="225px" /> <br />
-Guide: http://alexzh.com/tutorials/notification-for-android/
+<p float="left">
+  <img src="/art/screenshot_1_framed.png" height="400" />
+  <img src="/art/screenshot_2_framed.png" height="400" />
+  <img src="/art/screenshot_3_framed.png" height="400" />
+  <img src="/art/screenshot_4_framed.png" height="400" />
+</p>
 
-### Guide: Testing Android Notifications
-<img src="http://alexzh.com/wp-content/uploads/2018/06/logo-1140x713.png" width="360px" height="225px" /> <br />
-Guide: http://alexzh.com/tutorials/guide-testing-android-notifications/
+# Tutorials
+1. <a href="http://alexzh.com/tutorials/notification-for-android/" target="_blank">Guide: Android notifications</a>
+2. <a href="http://alexzh.com/tutorials/guide-testing-android-notifications/" target="_blank">Guide: Testing Android Notifications</a>
